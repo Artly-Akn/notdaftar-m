@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Yeni Not</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="center">
+  <h1>Yeni Not Ekle</h1>
+  <form id="noteForm">
+    <input type="text" id="title" placeholder="Başlık" required><br>
+    <textarea id="content" placeholder="İçerik" rows="5" required></textarea><br>
+    <button type="submit" class="btn">Kaydet</button>
+  </form>
+  <a href="index.html" class="btn back">⬅ Ana Sayfa</a>
+
+  <script>
+    document.getElementById('noteForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const title = document.getElementById('title').value;
+      const content = document.getElementById('content').value;
+      const notes = JSON.parse(localStorage.getItem('notes') || '[]');
+      notes.push({ title, content, date: new Date().toLocaleString() });
+      localStorage.setItem('notes', JSON.stringify(notes));
+      window.location.href = 'notes.html';
+    });
+  </script>
+</body>
+</html>
