@@ -4,65 +4,15 @@
   <meta charset="UTF-8">
   <title>Not Defterim</title>
   <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
 </head>
 <body>
   <header>
     <img src="img/logo.png" class="logo" alt="Logo">
     <h1>Not Defterim</h1>
-    <button id="addNoteBtn">+ Not Ekle</button>
+    <a href="new.html" id="addNoteBtn">+ Not Ekle</a>
   </header>
 
   <main id="noteList"></main>
-
-  <!-- Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span id="closeModal" class="close">&times;</span>
-      <h2>Yeni Not</h2>
-      <form id="noteForm">
-        <input type="text" id="title" placeholder="Başlık" required>
-        <textarea id="content" placeholder="İçerik" rows="5" required></textarea>
-        <button type="submit" class="btn">Kaydet</button>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    const noteList = document.getElementById('noteList');
-    const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-
-    function showNotes() {
-      noteList.innerHTML = '';
-      if (notes.length === 0) {
-        noteList.innerHTML = '<p>Henüz not eklenmedi.</p>';
-        return;
-      }
-      notes.slice().reverse().forEach(note => {
-        const div = document.createElement('div');
-        div.className = 'note';
-        div.innerHTML = `<h3>${note.title}</h3><p>${note.content}</p><small>${note.date}</small>`;
-        noteList.appendChild(div);
-      });
-    }
-
-    showNotes();
-
-    // Modal işlemleri
-    const modal = document.getElementById('modal');
-    document.getElementById('addNoteBtn').onclick = () => modal.style.display = 'block';
-    document.getElementById('closeModal').onclick = () => modal.style.display = 'none';
-
-    // Not ekleme
-    document.getElementById('noteForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const title = document.getElementById('title').value;
-      const content = document.getElementById('content').value;
-      notes.push({ title, content, date: new Date().toLocaleString() });
-      localStorage.setItem('notes', JSON.stringify(notes));
-      modal.style.display = 'none';
-      showNotes();
-      this.reset();
-    });
-  </script>
 </body>
 </html>
