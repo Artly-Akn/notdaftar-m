@@ -12,10 +12,12 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .logo {
   height: 40px;
+  max-width: 100%;
 }
 
 #addNoteBtn, header a {
@@ -25,6 +27,7 @@ header {
   padding: 10px 15px;
   border-radius: 8px;
   font-weight: bold;
+  margin-top: 10px;
 }
 
 main {
@@ -82,7 +85,7 @@ input, textarea {
 }
 
 textarea {
-  min-height: 70vh; /* Ekranın %70'i kadar yükseklik */
+  min-height: 70vh;
   resize: vertical;
 }
 
@@ -96,7 +99,6 @@ textarea {
   font-size: 16px;
 }
 
-/* Not detay sayfası tam genişlik */
 #noteDetail {
   background: white;
   max-width: 90%;
@@ -115,4 +117,45 @@ textarea {
   white-space: pre-wrap;
   line-height: 1.6;
   font-size: 18px;
+}
+
+/* Responsive ayarlar */
+@media (max-width: 768px) {
+  form,
+  #noteDetail {
+    max-width: 95%;
+    padding: 15px;
+  }
+
+  .note {
+    width: 90%;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #addNoteBtn {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  textarea {
+    min-height: 60vh;
+  }
+
+  input, textarea {
+    font-size: 16px;
+  }
+
+  .note-actions {
+    justify-content: center;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
