@@ -4,6 +4,7 @@ function saveNotes() {
   localStorage.setItem('notes', JSON.stringify(notes));
 }
 
+// Ana sayfadaki notları listele
 if (document.getElementById('noteList')) {
   const noteList = document.getElementById('noteList');
   if (notes.length === 0) {
@@ -27,17 +28,41 @@ if (document.getElementById('noteList')) {
   }
 }
 
+// Yeni not veya düzenleme formu
 if (document.getElementById('noteForm')) {
+  // Eğer düzenleme modundaysa alanları doldur
+  const isEdit = localStorage.getItem('editMode') === 'true';
+  const editIndex = localStorage.getItem('editIndex');
+
+  if (isEdit) {
+    document.getElementById('title').value = localStorage.getItem('editTitle');
+    document.getElementById('content').value = localStorage.getItem('editContent');
+  }
+
   document.getElementById('noteForm').addEventListener('submit', function (e) {
     e.preventDefault();
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
-    notes.push({ title, content, date: new Date().toLocaleString() });
+    const date = new Date().toLocaleString();
+
+    if (isEdit && editIndex !== null) {
+      // Mevcut notu güncelle
+      notes[editIndex] = { title, content, date };
+      localStorage.removeItem('editMode');
+      localStorage.removeItem('editIndex');
+      localStorage.removeItem('editTitle');
+      localStorage.removeItem('editContent');
+    } else {
+      // Yeni not ekle
+      notes.push({ title, content, date });
+    }
+
     saveNotes();
     window.location.href = 'index.html';
   });
 }
 
+// Not detay sayfası
 if (window.location.pathname.includes('note.html')) {
   const i = new URLSearchParams(window.location.search).get('i');
   const note = notes[i];
@@ -53,6 +78,7 @@ if (window.location.pathname.includes('note.html')) {
   }
 }
 
+// Not silme
 function deleteNote(index) {
   if (confirm("Bu notu silmek istiyor musun?")) {
     notes.splice(index, 1);
@@ -61,31 +87,12 @@ function deleteNote(index) {
   }
 }
 
+// Not düzenleme
 function editNote(index) {
   const note = notes[index];
-  localStorage.setItem('editIndex', index);
   localStorage.setItem('editMode', 'true');
+  localStorage.setItem('editIndex', index);
   localStorage.setItem('editTitle', note.title);
   localStorage.setItem('editContent', note.content);
   window.location.href = 'new.html';
-}
-
-if (localStorage.getItem('editMode') === 'true') {
-  const index = localStorage.getItem('editIndex');
-  document.getElementById('title').value = localStorage.getItem('editTitle');
-  document.getElementById('content').value = localStorage.getItem('editContent');
-
-  document.getElementById('noteForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    notes[index] = {
-      title: document.getElementById('title').value,
-      content: document.getElementById('content').value,
-      date: new Date().toLocaleString()
-    };
-    saveNotes();
-    localStorage.removeItem('editMode');
-    window.location.href = 'index.html';
-  });
-
-  localStorage.removeItem('editMode');
 }
