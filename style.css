@@ -18,13 +18,12 @@ header {
   height: 40px;
 }
 
-#addNoteBtn {
-  background: #fff;
+#addNoteBtn, header a {
+  background: white;
   color: #5c67f2;
-  border: none;
+  text-decoration: none;
   padding: 10px 15px;
   border-radius: 8px;
-  cursor: pointer;
   font-weight: bold;
 }
 
@@ -44,36 +43,39 @@ main {
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 10;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.4);
+.note a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.modal-content {
+.note-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.note-actions button {
+  background: #eee;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+form {
+  max-width: 600px;
+  margin: auto;
   background: white;
-  margin: 10% auto;
   padding: 20px;
   border-radius: 10px;
-  width: 90%;
-  max-width: 400px;
-  position: relative;
-}
-
-.close {
-  position: absolute;
-  top: 10px; right: 15px;
-  font-size: 24px;
-  cursor: pointer;
 }
 
 input, textarea {
   width: 100%;
   padding: 10px;
-  margin: 5px 0 15px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 8px;
 }
